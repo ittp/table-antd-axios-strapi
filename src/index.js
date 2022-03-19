@@ -5,19 +5,17 @@ import "./index.css";
 import { Table } from "antd";
 
 var axios = require("axios");
-var data = "";
-
-var config = {
-  method: "get",
-  url: "https://api.samodelkin.email/yookassa/list",
-  headers: {},
-  data: data
-};
 
 const columns = [
   {
-    title: "UUID",
-    dataIndex: "id"
+    key: "key",
+    dataSource: "key",
+    editable: false
+  },
+  {
+    title: "name",
+    dataIndex: "name",
+    editable: true
   }
 ];
 
@@ -32,8 +30,8 @@ class App extends React.Component {
     //this.fetch();
 
     let td = this.fetch();
-
-    console.log(td);
+    console.log(this.state);
+    // console.log(td);
   }
 
   handleTableChange = (pagination, filters, sorter) => {
@@ -52,18 +50,76 @@ class App extends React.Component {
   };
 
   fetch = (params = {}) => {
-    console.log("params:", params);
+    var config = {
+      method: "get",
+      url: "https://api.github.com/meta",
+      headers: {
+        "User-Agent": "Mozilla",
+        Accept: "application/json"
+      },
+      data: {
+        // ...params
+      }
+      // params: { ...params }
+    };
+
+    // console.log("params:", params);
     this.setState({ loading: true });
     const pagination = { ...this.state.pagination };
+
     axios(config)
-      .then(function (response) {
-        console.log(response.data);
-        return response.data;
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-      .then((data) => this.setState({ loading: false, pagination, data }));
+      .then((r) => r.data)
+      .catch((e) => console.log(e))
+      .then((data) => {
+        let keys = Object.keys(data);
+
+        let index = (data, index) => [index];
+
+        let response = keys.map((key, index) => {
+          let value = data[key];
+          let o = { key, value };
+          return o;
+        });
+
+        let columns = keys.map((key) => Object.create({ key, dataIndex: key }));
+        this.setState({
+          table: {
+            columns
+          },
+          meta: { keys, response, data }
+        });
+
+        // let row = Object.keys(data);
+
+        // let cell = Object.entries(data);
+
+        // let col = (data) =>
+        //   Object.create({
+        //     key: "",
+        //     dataIndex: "",
+        //     editable: true,
+        //     widget: "input"
+        //   });
+
+        // Object.keys(data).map((i, k) => {
+        //   let row = data[i];
+        //   let cell = Object.values(row);
+
+        //   console.log(row, cell);
+        //   // console.log(data[i]);
+
+        //   return {
+        //     key: k,
+        //     dataIndex: i,
+        //     editable: true,
+        //     widget: "input"
+        //   };
+        // });
+
+        // console.log(row);
+        // console.log(data);
+      });
+    // .then((data) => this.setState({ loading: false, pagination, data }));
 
     // reqwest({
     //   url: "https://api.samodelkin.email/yookassa/list",
@@ -87,14 +143,27 @@ class App extends React.Component {
   };
 
   render() {
+    // let columnss = [
+    //   { key: "key", dataIndex: "key" },
+    //   { key: "value", dataIndex: "value" }
+
+    // ];
+
+    let table = this.state.table;
+
+    let getColumnData = (key) => {};
+    let createColumnCell = (data) => {};
+
     return (
       <Table
-        columns={columns}
-        rowKey={(record) => record.id}
+        columns={this.state.columns}
+        // rowKey={(record) => record.key}
         dataSource={this.state.data}
+        // dataSource={[{ key: 0 }, { key: 1 }]}
         pagination={this.state.pagination}
         loading={this.state.loading}
         onChange={this.handleTableChange}
+        onRow={(data) => console.log(data)}
       />
     );
   }

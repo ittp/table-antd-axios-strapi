@@ -1,0 +1,62 @@
+{
+  "data": [],
+  "pagination": {},
+  "loading": true,
+  "table": {
+    "columns": [
+      {
+        "key": "verifiable_password_authentication",
+        "dataIndex": "verifiable_password_authentication"
+      },
+      {
+        "key": "ssh_key_fingerprints",
+        "dataIndex": "ssh_key_fingerprints"
+      },
+      {
+        "key": "ssh_keys",
+        "dataIndex": "ssh_keys"
+      },
+      {
+        "key": "hooks",
+        "dataIndex": "hooks"
+      },
+      {
+        "key": "web",
+        "dataIndex": "web"
+      },
+      {
+        "key": "api",
+        "dataIndex": "api"
+      },
+      {
+        "key": "git",
+        "dataIndex": "git"
+      },
+      {
+        "key": "packages",
+        "dataIndex": "packages"
+      },
+      {
+        "key": "pages",
+        "dataIndex": "pages"
+      },
+      {
+        "key": "importer",
+        "dataIndex": "importer"
+      },
+      {
+        "key": "actions",
+        "dataIndex": "actions"
+      },
+      {
+        "key": "dependabot",
+        "dataIndex": "dependabot"
+      }
+    ]
+  },
+  "meta": {
+    "keys": "[\"verifiable_password_authentication\", \"ssh_key_fin…]",
+    "response": "[{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, …]",
+    "data": "{api: Array(19), actions: Array(2183), dependabot: …}"
+  }
+}
